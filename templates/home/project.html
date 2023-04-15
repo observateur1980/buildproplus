@@ -1,0 +1,207 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <style>
+
+        .selected tr:hover td, tr.hover td {
+            background-color: #ece8e8
+        }
+
+    </style>
+    <!-- Pricing section-->
+    <section class="bg-light py-5">
+        <div class="container px-5 my-5">
+            <div class="row">
+                <div class="col-md-6"><h1 class="fw-bolder">Projects</h1></div>
+                <hr>
+            </div>
+        <form method="post">
+        {% csrf_token %}
+            <div class="row g-3 align-items-center">
+
+
+                <div class="col-auto">
+                    <label class="col-form-label" for="inputPassword6">Status</label>
+                </div>
+                <div class="col-auto">
+
+
+                        <select class="form-select" id="status" name="status" onchange="this.form.submit()">
+                            {% for status in qs_statuses %}
+                                <option id="{{ status.id }}" value="{{ status.id }}"
+                                        {% if status_id == status.id %}
+                                        selected
+                                        {% endif %}>
+                                    {{ status.current_status }}</option>
+                            {% endfor %}
+                        </select>
+
+                </div>
+
+
+                <div class="col-auto">
+                    <label class="col-form-label" for="inputPassword7">Customers</label>
+                </div>
+                <div class="col-auto">
+
+
+                    <select class="form-select" id="customer" name="customer" onchange="this.form.submit()">
+
+                        {% for customer in qs_customers %}
+                            <option id="{{ customer.id }}" value="{{ customer.id }}"
+                                        {% if customer_id == customer.id %}
+                                        selected
+                                        {% endif %}>
+                                    {{ customer.first_name }} {{ customer.last_name }}</option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+                <div class="col-auto">
+
+                    <div class="input-group" style="width: 400px">
+                        <input type="search" class="form-control rounded" placeholder="Search project"
+                               aria-label="Search" aria-describedby="search-addon"/>
+                        <button type="button" class="btn btn-outline-primary">search</button>
+                    </div>
+
+                </div>
+
+
+                <div class="col-md" style="text-align: right">
+                    <div><a class="btn btn-outline-primary" href="#!">Create new project</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+            <br>
+            <div class="row gx-5 justify-content-center">
+                <!-- Pricing card free-->
+                <div class="col-lg-12 col-xl-12">
+                    <div class="card mb-5 mb-xl-0">
+                        <div class="card-body p-5">
+
+
+                            <table class="table selected">
+                                <thead>
+                                <tr>
+
+                                    <th scope="col">Project / Customer</th>
+                                    <th scope="col" style="width: 400px"></th>
+                                    <th scope="col">Profit margin</th>
+                                    <th scope="col">Start date</th>
+                                    <th scope="col">End date</th>
+                                    <th scope="col">Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                {% for project in qs_projects %}
+                                    <tr>
+
+                                        <td>
+                                            <div class="row" style="--bs-gutter-x: 2em">
+                                                <div class="col-md-1" style="vertical-align: center"><i
+                                                        class="bi bi-star"></i></div>
+                                                <div class="col">
+                                                    <ul class="list-unstyled mb-4">
+
+                                                        <li class="mb-2">
+                                                            <i class="bi bi-file-earmark-check"></i>
+                                                            <a href="#" style="color: black; text-decoration:none; ">
+                                                                {{ project.title }}
+                                                            </a>
+                                                            <br>
+                                                            <i class="bi bi-person"></i>
+                                                            <a href="#"
+                                                               style="color: black; text-decoration:none;font-style: italic">
+                                                                {{ project.customer__first_name }} {{ project.customer__last_name }}
+                                                            </a>
+
+
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+
+                                            <div class="d-flex align-items-center">
+
+                                                <span style="width: 65px">Income &nbsp;</span>
+
+                                                <div class="col">
+                                                    <div class="progress" style="height: 10px;">
+                                                        <div aria-valuemax="100" aria-valuemin="0"
+                                                             aria-valuenow="25" class="progress-bar  bg-success"
+                                                             role="progressbar" style="width: 75%;"></div>
+                                                    </div>
+                                                </div>
+
+                                                <span style="width: 150px;text-align: right">$ {{ project.project_profit__income }}</span>
+
+                                            </div>
+
+
+                                            <div class="d-flex align-items-center">
+
+                                                <span style="width: 65px">Cost &nbsp;</span>
+
+                                                <div class="col">
+                                                    <div class="progress" style="height: 10px;">
+                                                        <div aria-valuemax="100" aria-valuemin="0"
+                                                             aria-valuenow="25" class="progress-bar  "
+                                                             role="progressbar" style="width: 35%;"></div>
+                                                    </div>
+                                                </div>
+
+                                                <span style="width: 150px;text-align: right">{{ project.project_profit__cost }}</span>
+
+                                            </div>
+
+
+                                        </td>
+                                        <td style="text-align: right">{{ project.project_profit__margin }}%</td>
+                                        <td style="text-align: right">{{ project.start_date }}</td>
+                                        <td style="text-align: right">{{ project.end_date }}</td>
+                                        <td>
+
+                                            <div class="dropdown">
+                                                <button aria-expanded="false"
+                                                        class="btn btn-outline-primary dropdown-toggle"
+                                                        data-bs-toggle="dropdown" id="dropdownMenuButton1"
+                                                        type="button">
+                                                    Options
+                                                </button>
+                                                <ul aria-labelledby="dropdownMenuButton1" class="dropdown-menu">
+                                                    <li><a class="dropdown-item" href="#">Action</a></li>
+                                                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                                </ul>
+                                            </div>
+
+                                        </td>
+
+                                    </tr>
+                                {% endfor %}
+
+
+                                </tbody>
+                            </table>
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+
+    </section>
+
+
+{% endblock %}
