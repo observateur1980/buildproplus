@@ -13,10 +13,12 @@ from django.db.models import Q
 class UserLoginForm(forms.Form):
     query = forms.CharField(label='',
                             widget=forms.TextInput(
-                                attrs={'id': 'contact-email', 'name': 'contact-email', 'class': 'm-required', }))
+                                attrs={'id': 'contact-email', 'name': 'contact-email', 'class': 'form-control',
+                                       'placeholder':'name@example.com', }),
+                            )
 
     password = forms.CharField(label='', widget=forms.PasswordInput(
-        attrs={'id': 'password', 'name': 'password', 'class': 'm-required', }))
+        attrs={'id': 'password', 'name': 'password', 'class': 'form-control', }))
 
     def clean(self, *args, **kwargs):
         query = self.cleaned_data.get('query')
