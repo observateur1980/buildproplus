@@ -17,7 +17,6 @@ class Customer(models.Model):
 
 
 class ProjectProfit(models.Model):
-
     income = models.DecimalField(max_digits=8, decimal_places=2)
     cost = models.DecimalField(max_digits=8, decimal_places=2)
     profit = models.DecimalField(max_digits=8, decimal_places=2)
@@ -34,6 +33,7 @@ class Status(models.Model):
         verbose_name = 'status'
         verbose_name_plural = 'statuses'
 
+
 class Project(models.Model):
     title = models.CharField(max_length=400)
     status = models.ForeignKey(Status, on_delete=models.CASCADE, blank=True, null=True)
@@ -49,6 +49,3 @@ class Project(models.Model):
     class Meta:
         verbose_name = 'project'
         verbose_name_plural = 'projects'
-
-
-
