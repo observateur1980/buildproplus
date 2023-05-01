@@ -28,8 +28,8 @@
 
                         <select class="form-select" id="status" name="status" onchange="this.form.submit()">
                             {% for status in qs_statuses %}
-                                <option id="{{ status.id }}" value="{{ status.id }}"
-                                        {% if status_id == status.id %}
+                                <option id="{{ status.opt_numb }}" value="{{ status.opt_numb }}"
+                                        {% if opt_numb_select == status.opt_numb %}
                                         selected
                                         {% endif %}>
                                     {{ status.current_status }}</option>
@@ -71,7 +71,7 @@
 
 
                 <div class="col-md" style="text-align: right">
-                    <div><a class="btn btn-outline-primary" href="#!">Create new project</a>
+                    <div><a class="btn btn-outline-primary" href="{% url 'home:newproject' %}">Create new project</a>
                     </div>
                 </div>
             </div>

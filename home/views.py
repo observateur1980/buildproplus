@@ -1,21 +1,19 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import Q
-from django.views.generic.base import TemplateView
+from django.shortcuts import redirect, render
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, FormView
+
+from django.views.generic.base import TemplateView, View
 
 from home.models import Project, Status, Customer
+
 
 
 # Create your views here.
 
 
-class Index(TemplateView):
-    template_name = 'home/index.html'
-
-
 class Home(LoginRequiredMixin, TemplateView):
     template_name = 'home/home.html'
-
-
 
 
 class ProjectPage(LoginRequiredMixin, TemplateView):
@@ -23,12 +21,12 @@ class ProjectPage(LoginRequiredMixin, TemplateView):
 
     def post(self, request, *args, **kwargs):
 
-        status_id = int(request.POST['status'])
+        opt_numb_select = int(request.POST['status'])
         customer_id = int(request.POST['customer'])
 
-        qs_statuses = Status.objects.all().values('id', 'current_status')
+        qs_statuses = Status.objects.all().values('id', 'opt_numb', 'current_status')
         qs_customers = Customer.objects.all().values('id', 'first_name', 'last_name')
-        if status_id == 1 and customer_id == 1:
+        if opt_numb_select == 1 and customer_id == 1:
             qs_projects = Project.objects.all().values('id', 'title', 'customer__id',
                                                        'customer__first_name',
                                                        'customer__last_name',
@@ -39,7 +37,7 @@ class ProjectPage(LoginRequiredMixin, TemplateView):
                                                        'project_profit__margin',
 
                                                        'start_date', 'end_date')
-        elif status_id != 1 and customer_id == 1:
+        elif opt_numb_select != 1 and customer_id == 1:
             qs_projects = Project.objects.all().values('id', 'title', 'customer__id',
                                                        'customer__first_name',
                                                        'customer__last_name',
@@ -50,8 +48,8 @@ class ProjectPage(LoginRequiredMixin, TemplateView):
                                                        'project_profit__margin',
 
                                                        'start_date', 'end_date') \
-                .filter(status__id=status_id, customer__id__gt=1)
-        elif status_id != 1 and customer_id != 1:
+                .filter(status__opt_numb=opt_numb_select, customer__id__gt=1)
+        elif opt_numb_select != 1 and customer_id != 1:
             qs_projects = Project.objects.all().values('id', 'title', 'customer__id',
                                                        'customer__first_name',
                                                        'customer__last_name',
@@ -62,8 +60,8 @@ class ProjectPage(LoginRequiredMixin, TemplateView):
                                                        'project_profit__margin',
 
                                                        'start_date', 'end_date') \
-                .filter(status__id=status_id, customer__id=customer_id)
-        elif status_id == 1 and customer_id != 1:
+                .filter(status__opt_numb=opt_numb_select, customer__id=customer_id)
+        elif opt_numb_select == 1 and customer_id != 1:
             qs_projects = Project.objects.all().values('id', 'title', 'customer__id',
                                                        'customer__first_name',
                                                        'customer__last_name',
@@ -74,14 +72,14 @@ class ProjectPage(LoginRequiredMixin, TemplateView):
                                                        'project_profit__margin',
 
                                                        'start_date', 'end_date') \
-                .filter(status__id__gt=1, customer__id=customer_id)
+                .filter(status__opt_numb__gt=1, customer__id=customer_id)
 
         context = {
             'menu': "homemenu",
             'qs_statuses': qs_statuses,
             'qs_customers': qs_customers,
             'qs_projects': qs_projects,
-            'status_id': status_id,
+            'opt_numb_select': opt_numb_select,
             'customer_id': customer_id,
 
         }
@@ -89,8 +87,8 @@ class ProjectPage(LoginRequiredMixin, TemplateView):
         return self.render_to_response(context)
 
     def get(self, request, *args, **kwargs):
-        status_id = 2
-        qs_statuses = Status.objects.all().values('id', 'current_status')
+        opt_numb_select = 3
+        qs_statuses = Status.objects.all().values('id', 'opt_numb', 'current_status')
         qs_customers = Customer.objects.all().values('id', 'first_name', 'last_name')
         qs_projects = Project.objects.all().values('id', 'title', 'customer__id',
 
@@ -103,15 +101,35 @@ class ProjectPage(LoginRequiredMixin, TemplateView):
                                                    'project_profit__margin',
 
                                                    'start_date', 'end_date') \
-            .filter(status__id=status_id, )
+            .filter(status__opt_numb=opt_numb_select, )
 
         context = {
             'menu': "projectmenu",
             'qs_statuses': qs_statuses,
             'qs_customers': qs_customers,
             'qs_projects': qs_projects,
-            'status_id': status_id,
+            'opt_numb_select': opt_numb_select,
 
         }
 
         return self.render_to_response(context)
+
+
+def project_create(request, template_name='home/create_project.html'):
+    form = ProjectForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect('project_page')
+    return render(request, template_name, {'form': form})
+
+
+class CreateProject(View):
+    template_name = 'home/create_project.html'
+    success_url = 'projectpage'
+
+    def get(self, request, *args, **kwargs):
+        qs_statuses = Status.objects.all().values('id', 'opt_numb', 'current_status')
+        context = {
+            'qs_statuses': qs_statuses,
+        }
+        return render(request, self.template_name, context)

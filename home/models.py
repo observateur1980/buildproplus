@@ -24,9 +24,10 @@ class ProjectProfit(models.Model):
 
 
 class Status(models.Model):
+    opt_numb = models.IntegerField(unique=True);
     current_status = models.CharField(max_length=50);
 
-    def __str_(self):
+    def __str__(self):
         return self.current_status
 
     class Meta:
@@ -36,7 +37,8 @@ class Status(models.Model):
 
 class Project(models.Model):
     title = models.CharField(max_length=400)
-    status = models.ForeignKey(Status, on_delete=models.CASCADE, blank=True, null=True)
+    status = models.ForeignKey(Status, on_delete=models.CASCADE,
+                               blank=True, null=True, to_field='opt_numb')
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, blank=True, null=True)
     project_profit = models.ForeignKey(ProjectProfit, on_delete=models.CASCADE, blank=True, null=True)
     created_date = models.DateTimeField(default=timezone.now)

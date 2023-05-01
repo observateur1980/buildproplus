@@ -62,12 +62,13 @@ class ProjectProfitModelAdmin(admin.ModelAdmin):
 class StatusModelAdmin(admin.ModelAdmin):
     fields = [
         'id',
+        'opt_numb',
         'current_status',
 
     ]
 
     readonly_fields = ['id', ]
-    list_display = ('id', 'current_status',)
+    list_display = ('id', 'opt_numb','current_status',)
 
     class Meta:
         model = Status
