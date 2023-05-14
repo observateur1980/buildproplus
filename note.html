@@ -1,0 +1,12 @@
+<select class="form-select" id="status" name="status" >
+                        {% for status in qs_statuses %}
+                        <option id="{{ status.opt_numb }}" value="{{ status.opt_numb }}">
+                            {{ status.current_status }}</option>
+                        {% endfor %}
+                    </select>
+
+
+
+
+
+

@@ -5,11 +5,12 @@ from django.utils import timezone
 # Create your models here.
 
 class Customer(models.Model):
-    first_name = models.CharField(max_length=400)
-    last_name = models.CharField(max_length=400)
+    customer_first_name = models.CharField(max_length=400)
+    customer_last_name = models.CharField(max_length=400)
+    customer_email = models.EmailField(blank=True, null=True)
 
     def __str__(self):
-        return self.first_name + ' ' + self.last_name
+        return self.customer_first_name + ' ' + self.customer_last_name
 
     class Meta:
         verbose_name = 'customer'
@@ -17,18 +18,18 @@ class Customer(models.Model):
 
 
 class ProjectProfit(models.Model):
-    income = models.DecimalField(max_digits=8, decimal_places=2)
-    cost = models.DecimalField(max_digits=8, decimal_places=2)
-    profit = models.DecimalField(max_digits=8, decimal_places=2)
-    margin = models.FloatField(null=True, blank=True, default=None)
+    project_profit_income = models.DecimalField(max_digits=8, decimal_places=2)
+    project_profit_cost = models.DecimalField(max_digits=8, decimal_places=2)
+    project_profit_profit = models.DecimalField(max_digits=8, decimal_places=2)
+    project_profit_margin = models.FloatField(null=True, blank=True, default=None)
 
 
 class Status(models.Model):
-    opt_numb = models.IntegerField(unique=True);
-    current_status = models.CharField(max_length=50);
+    status_opt_numb = models.IntegerField(unique=True);
+    status_current_status = models.CharField(max_length=50);
 
     def __str__(self):
-        return self.current_status
+        return self.status_current_status
 
     class Meta:
         verbose_name = 'status'
@@ -36,18 +37,30 @@ class Status(models.Model):
 
 
 class Project(models.Model):
-    title = models.CharField(max_length=400)
+    project_title = models.CharField(max_length=400)
     status = models.ForeignKey(Status, on_delete=models.CASCADE,
-                               blank=True, null=True, to_field='opt_numb')
+                                       blank=True, null=True, )
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, blank=True, null=True)
     project_profit = models.ForeignKey(ProjectProfit, on_delete=models.CASCADE, blank=True, null=True)
-    created_date = models.DateTimeField(default=timezone.now)
-    start_date = models.DateField(blank=True, null=True)
-    end_date = models.DateField(blank=True, null=True)
+    project_created_date = models.DateTimeField(default=timezone.now)
+    project_start_date = models.DateField(blank=True, null=True)
+    project_end_date = models.DateField(blank=True, null=True)
 
     def __str__(self):
-        return self.title
+        return self.project_title
 
     class Meta:
         verbose_name = 'project'
         verbose_name_plural = 'projects'
+
+
+class Unvan(models.Model):
+    unvan_title = models.CharField(max_length=400)
+    unvan_city = models.CharField(max_length=400)
+    unvan_state = models.CharField(max_length=400)
+    unvan_zip = models.CharField(max_length=400)
+    unvan_customer = models.ForeignKey(Customer, on_delete=models.CASCADE, blank=True, null=True)
+    unvan_created_date = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return self.unvan_title

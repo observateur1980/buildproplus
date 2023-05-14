@@ -1,12 +1,13 @@
-from home.models import Project, Status, Customer
+from home.models import  Customer
 
 customers = [
     Customer(
-        first_name="All",
-        last_name="customers",
+        customer_first_name="All",
+        customer_last_name="customers",
+
     ),
 
 
 ]
 
-Status.objects.bulk_create(customers)
+Customer.objects.bulk_create(customers)

@@ -28,11 +28,11 @@
 
                         <select class="form-select" id="status" name="status" onchange="this.form.submit()">
                             {% for status in qs_statuses %}
-                                <option id="{{ status.opt_numb }}" value="{{ status.opt_numb }}"
-                                        {% if opt_numb_select == status.opt_numb %}
+                                <option id="{{ status.status_opt_numb }}" value="{{ status.status_opt_numb }}"
+                                        {% if opt_numb_select == status.status_opt_numb %}
                                         selected
                                         {% endif %}>
-                                    {{ status.current_status }}</option>
+                                    {{ status.status_current_status }}</option>
                             {% endfor %}
                         </select>
 
@@ -52,7 +52,7 @@
                                         {% if customer_id == customer.id %}
                                         selected
                                         {% endif %}>
-                                    {{ customer.first_name }} {{ customer.last_name }}</option>
+                                    {{ customer.customer_first_name }} {{ customer.customer_last_name }}</option>
 
                         {% endfor %}
 
@@ -71,7 +71,7 @@
 
 
                 <div class="col-md" style="text-align: right">
-                    <div><a class="btn btn-outline-primary" href="{% url 'home:newproject' %}">Create new project</a>
+                    <div><a class="btn btn-outline-primary" href="{% url 'home:create-project' %}">Create new project</a>
                     </div>
                 </div>
             </div>
@@ -111,13 +111,13 @@
                                                         <li class="mb-2">
                                                             <i class="bi bi-file-earmark-check"></i>
                                                             <a href="#" style="color: black; text-decoration:none; ">
-                                                                {{ project.title }}
+                                                                {{ project.project_title }}
                                                             </a>
                                                             <br>
                                                             <i class="bi bi-person"></i>
                                                             <a href="#"
                                                                style="color: black; text-decoration:none;font-style: italic">
-                                                                {{ project.customer__first_name }} {{ project.customer__last_name }}
+                                                                {{ project.customer__customer_first_name }} {{ project.customer__customer_last_name }}
                                                             </a>
 
 

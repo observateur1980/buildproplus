@@ -2,24 +2,24 @@ from home.models import Project, Status, Customer
 
 statuses = [
     Status(
-        opt_numb=1,
-        current_status="All statuses",
+        status_opt_numb=1,
+        status_current_status="All statuses",
     ),
     Status(
-        opt_numb=2,
-        current_status="Not started",
+        status_opt_numb=2,
+        status_current_status="Not started",
     ),
     Status(
-        opt_numb=3,
-        current_status="In progress",
+        status_opt_numb=3,
+        status_current_status="In progress",
     ),
     Status(
-        opt_numb=4,
-        current_status="Completed",
+        status_opt_numb=4,
+        status_current_status="Completed",
     ),
     Status(
-        opt_numb=5,
-        current_status="Canceled",
+        status_opt_numb=5,
+        status_current_status="Canceled",
     ),
 ]
 

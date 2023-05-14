@@ -1,12 +1,9 @@
 from django import forms
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.contrib.auth import get_user_model, authenticate
-from .models import MyUser
-from django.core.validators import RegexValidator
 
 User = get_user_model()
 
-from .models import USERNAME_REGEX
 from django.db.models import Q
 
 
