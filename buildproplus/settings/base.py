@@ -13,7 +13,7 @@ SECRET_KEY = 'django-insecure-=tl22hpq7!ankm#$coz&qd0=7bb=4ixf#!$_b7=@pkwbxn@0e*
 
 
 # Application definition
-SITE_ID = 6
+SITE_ID = 13
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
