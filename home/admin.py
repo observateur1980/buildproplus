@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Project, Customer, ProjectProfit, Status, Unvan
+from .models import Project, Customer, Status, Unvan
 
 
 class role_inlineCustomerProject(admin.TabularInline):
@@ -21,7 +21,6 @@ class CustomerModelAdmin(admin.ModelAdmin):
         'customer_last_name',
         'customer_email',
 
-
     ]
 
     readonly_fields = ['id', ]
@@ -37,7 +36,10 @@ class ProjectModelAdmin(admin.ModelAdmin):
         'project_title',
         'status',
         'customer',
+        'project_income',
+        'project_cost',
         'project_profit',
+        'project_margin',
         'project_created_date',
         'project_start_date',
         'project_end_date',
@@ -47,30 +49,16 @@ class ProjectModelAdmin(admin.ModelAdmin):
     readonly_fields = ['id', ]
     list_display = ('project_title', 'status',
                     'customer',
+                    'project_income',
+                    'project_cost',
                     'project_profit',
+                    'project_margin',
                     'project_created_date',
                     'project_start_date',
                     'project_end_date',)
 
     class Meta:
         model = Project
-
-
-class ProjectProfitModelAdmin(admin.ModelAdmin):
-    fields = [
-        'id',
-        'project_profit_income',
-        'project_profit_cost',
-        'project_profit_profit',
-        'project_profit_margin',
-
-    ]
-
-    readonly_fields = ['id', ]
-    list_display = ('id', 'project_profit_income', 'project_profit_cost', 'project_profit_profit', 'project_profit_margin')
-
-    class Meta:
-        model = ProjectProfit
 
 
 class StatusModelAdmin(admin.ModelAdmin):
@@ -112,6 +100,5 @@ class UnvanModelAdmin(admin.ModelAdmin):
 
 admin.site.register(Project, ProjectModelAdmin)
 admin.site.register(Customer, CustomerModelAdmin)
-admin.site.register(ProjectProfit, ProjectProfitModelAdmin)
 admin.site.register(Status, StatusModelAdmin)
 admin.site.register(Unvan, UnvanModelAdmin)

@@ -25,17 +25,18 @@ class ProjectPage(LoginRequiredMixin, TemplateView):
         customer_id = int(request.POST['customer'])
 
         qs_statuses = Status.objects.all().values('id', 'status_opt_numb', 'status_current_status')
-        qs_customers = Customer.objects.all().values('id', 'customer_first_name', 'customer_last_name', 'customer_email')
+        qs_customers = Customer.objects.all().values('id', 'customer_first_name', 'customer_last_name',
+                                                     'customer_email')
         if opt_numb_select == 1 and customer_id == 1:
             qs_projects = Project.objects.all().values('id', 'project_title', 'customer__id',
                                                        'customer__customer_first_name',
                                                        'customer__customer_last_name',
-                                                       'customer__customer_email'
+                                                       'customer__customer_email',
 
-                                                       'project_profit__income',
-                                                       'project_profit__cost',
-                                                       'project_profit__profit',
-                                                       'project_profit__margin',
+                                                       'project_income',
+                                                       'project_cost',
+                                                       'project_profit',
+                                                       'project_margin',
 
                                                        'project_start_date', 'project_end_date')
         elif opt_numb_select != 1 and customer_id == 1:
@@ -44,11 +45,10 @@ class ProjectPage(LoginRequiredMixin, TemplateView):
                                                        'customer__customer_last_name',
                                                        'customer__customer_email',
 
-
-                                                       'project_profit__income',
-                                                       'project_profit__cost',
-                                                       'project_profit__profit',
-                                                       'project_profit__margin',
+                                                       'project_income',
+                                                       'project_cost',
+                                                       'project_profit',
+                                                       'project_margin',
 
                                                        'project_start_date', 'project_end_date') \
                 .filter(status__status_opt_numb=opt_numb_select, customer__id__gt=1)
@@ -58,10 +58,10 @@ class ProjectPage(LoginRequiredMixin, TemplateView):
                                                        'customer__customer_last_name',
                                                        'customer__customer_email',
 
-                                                       'project_profit__income',
-                                                       'project_profit__cost',
-                                                       'project_profit__profit',
-                                                       'project_profit__margin',
+                                                       'project_income',
+                                                       'project_cost',
+                                                       'project_profit',
+                                                       'project_margin',
 
                                                        'project_start_date', 'project_end_date') \
                 .filter(status__status_opt_numb=opt_numb_select, customer__id=customer_id)
@@ -71,13 +71,13 @@ class ProjectPage(LoginRequiredMixin, TemplateView):
                                                        'customer__customer_last_name',
                                                        'customer__customer_email',
 
-                                                       'project_profit__income',
-                                                       'project_profit__cost',
-                                                       'project_profit__profit',
-                                                       'project_profit__margin',
+                                                       'project_income',
+                                                       'project_cost',
+                                                       'project_profit',
+                                                       'project_margin',
 
                                                        'project_start_date', 'project_end_date') \
-                .filter(status__opt_numb__gt=1, customer__id=customer_id)
+                .filter(status__status_opt_numb__gt=1, customer__id=customer_id)
 
         context = {
             'menu': "homemenu",
@@ -95,22 +95,22 @@ class ProjectPage(LoginRequiredMixin, TemplateView):
         opt_numb_select = 3
         qs_statuses = Status.objects.all().values('id', 'status_opt_numb', 'status_current_status')
 
-        qs_customers = Customer.objects.all().values('id', 'customer_first_name', 'customer_last_name')
+        qs_customers = Customer.objects.all().values('id', 'customer_first_name', 'customer_last_name',
+                                                     'customer_email')
 
         qs_projects = Project.objects.all().values('id', 'project_title', 'customer__id',
 
                                                    'customer__customer_first_name',
                                                    'customer__customer_last_name',
+                                                   'customer__customer_email',
 
-                                                   'project_profit__project_profit_income',
-                                                   'project_profit__project_profit_cost',
-                                                   'project_profit__project_profit_profit',
-                                                   'project_profit__project_profit_margin',
+                                                   'project_income',
+                                                   'project_cost',
+                                                   'project_profit',
+                                                   'project_margin',
 
                                                    'project_start_date', 'project_end_date') \
             .filter(status__status_opt_numb=opt_numb_select, )
-
-
 
         context = {
             'menu': "projectmenu",
@@ -133,11 +133,11 @@ def create_project(request):
             customer = customer_form.save()
 
             project = project_form.save(commit=False)
-            project.project_customer = customer
+            project.customer = customer
             project.save()
 
             unvan = unvan_form.save(commit=False)
-            unvan.unvan_customer = customer
+            unvan.customer = customer
             unvan.save()
             return redirect("home:projectpage")
 
@@ -145,7 +145,7 @@ def create_project(request):
     project_form = ProjectForm()
     unvan_form = UnvanForm()
     return render(request, "home/create_project.html",
-                  { "customer_form": customer_form,
-                    "project_form": project_form,
-                    "unvan_form": unvan_form}
+                  {"customer_form": customer_form,
+                   "project_form": project_form,
+                   "unvan_form": unvan_form}
                   )

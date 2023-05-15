@@ -17,11 +17,7 @@ class Customer(models.Model):
         verbose_name_plural = 'customers'
 
 
-class ProjectProfit(models.Model):
-    project_profit_income = models.DecimalField(max_digits=8, decimal_places=2)
-    project_profit_cost = models.DecimalField(max_digits=8, decimal_places=2)
-    project_profit_profit = models.DecimalField(max_digits=8, decimal_places=2)
-    project_profit_margin = models.FloatField(null=True, blank=True, default=None)
+
 
 
 class Status(models.Model):
@@ -41,7 +37,12 @@ class Project(models.Model):
     status = models.ForeignKey(Status, on_delete=models.CASCADE,
                                        blank=True, null=True, )
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, blank=True, null=True)
-    project_profit = models.ForeignKey(ProjectProfit, on_delete=models.CASCADE, blank=True, null=True)
+
+    project_income = models.DecimalField(max_digits=8, decimal_places=2, default=0.00)
+    project_cost = models.DecimalField(max_digits=8, decimal_places=2, default=0.00)
+    project_profit = models.DecimalField(max_digits=8, decimal_places=2, default=0.00)
+    project_margin = models.FloatField(null=True, blank=True, default=0.00)
+
     project_created_date = models.DateTimeField(default=timezone.now)
     project_start_date = models.DateField(blank=True, null=True)
     project_end_date = models.DateField(blank=True, null=True)
