@@ -1,8 +1,11 @@
 from django.db import models
 from django.utils import timezone
-
+from django.contrib.auth.models import User
 
 # Create your models here.
+
+# Extending User Model Using a One-To-One Link
+
 
 class Company(models.Model):
     company_title = models.CharField(max_length=400)
