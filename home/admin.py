@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Project, Customer, Status, Unvan
+from .models import Project, Customer, Status, Unvan, Company
 
 
 class role_inlineCustomerProject(admin.TabularInline):
@@ -102,3 +102,4 @@ admin.site.register(Project, ProjectModelAdmin)
 admin.site.register(Customer, CustomerModelAdmin)
 admin.site.register(Status, StatusModelAdmin)
 admin.site.register(Unvan, UnvanModelAdmin)
+admin.site.register(Company)

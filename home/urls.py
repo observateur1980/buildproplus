@@ -8,6 +8,7 @@ urlpatterns = [
     path('', views.Home.as_view(), name='home'),
     path('projectpage', views.ProjectPage.as_view(), name='projectpage'),
     path('create-project', views.create_project, name='create-project'),
+    path('create-company', views.create_company, name='create-company'),
 
 
 

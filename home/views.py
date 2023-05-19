@@ -149,3 +149,31 @@ def create_project(request):
                    "project_form": project_form,
                    "unvan_form": unvan_form}
                   )
+
+
+
+def create_company(request):
+    if request.method == "POST":
+        customer_form = CustomerForm(request.POST)
+        project_form = ProjectForm(request.POST)
+        unvan_form = UnvanForm(request.POST)
+        if customer_form.is_valid() and project_form.is_valid() and unvan_form.is_valid():
+            customer = customer_form.save()
+
+            project = project_form.save(commit=False)
+            project.customer = customer
+            project.save()
+
+            unvan = unvan_form.save(commit=False)
+            unvan.customer = customer
+            unvan.save()
+            return redirect("home:projectpage")
+
+    customer_form = CustomerForm()
+    project_form = ProjectForm()
+    unvan_form = UnvanForm()
+    return render(request, "home/create_project.html",
+                  {"customer_form": customer_form,
+                   "project_form": project_form,
+                   "unvan_form": unvan_form}
+                  )

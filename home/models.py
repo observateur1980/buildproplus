@@ -8,6 +8,8 @@ from django.contrib.auth.models import User
 
 
 class Company(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE,
+                               blank=True, null=True, )  # Delete profile when user is deleted
     company_title = models.CharField(max_length=400)
     company_category = models.CharField(max_length=400)
 

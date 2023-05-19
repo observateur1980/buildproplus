@@ -13,3 +13,7 @@ def user_login(request, *args, **kwargs):
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect('/')
+
+
+def profile(request):
+    return render(request, 'paruser/profile.html', )

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+    <section class=" py-5">
+    <div class="container px-5 my-5">
+
+    <h1>{{ user.username }}</h1>
+        <h1>{{ user.email }}</h1>
+           <h1>{{ user.first_name }}</h1>
+           <h1>{{ user.last_name }}</h1>
+        <h1>
+            <img  style="border-radius: 50%"  src="{{ user.socialaccount_set.all.0.get_avatar_url }}" />
+        </h1>
+
+
+
+    </div>
+    </section>
+
+{% endblock %}
