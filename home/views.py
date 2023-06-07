@@ -5,7 +5,7 @@ from django.views.generic import CreateView, FormView
 
 from django.views.generic.base import TemplateView, View
 
-from home.forms import CustomerForm, ProjectForm, UnvanForm
+from home.forms import CustomerForm, ProjectForm, UnvanForm, CompanyForm, CompanyUnvanForm, SubcontractorCategoryForm
 from home.models import Project, Status, Customer
 
 
@@ -154,7 +154,7 @@ def create_project(request):
 
 def create_company(request):
     if request.method == "POST":
-        customer_form = CustomerForm(request.POST)
+        customer_form = CompanyForm(request.POST)
         project_form = ProjectForm(request.POST)
         unvan_form = UnvanForm(request.POST)
         if customer_form.is_valid() and project_form.is_valid() and unvan_form.is_valid():
@@ -169,11 +169,13 @@ def create_company(request):
             unvan.save()
             return redirect("home:projectpage")
 
-    customer_form = CustomerForm()
-    project_form = ProjectForm()
-    unvan_form = UnvanForm()
-    return render(request, "home/create_project.html",
-                  {"customer_form": customer_form,
-                   "project_form": project_form,
-                   "unvan_form": unvan_form}
+    company_form = CompanyForm()
+    companyunvan_form = CompanyUnvanForm()
+    subcontractorcategory_form = SubcontractorCategoryForm()
+
+    return render(request, "home/create_company.html",
+                  {"company_form": company_form,
+                   "companyunvan_form": companyunvan_form,
+                   "subcontractorcategory_form": subcontractorcategory_form,
+                   }
                   )

@@ -1,7 +1,57 @@
 from django import forms
-from django.forms import TextInput, ChoiceField, Select
+from django.forms import TextInput, ChoiceField, Select, CheckboxInput
 
-from home.models import Project, Customer, Unvan
+from home.models import Project, Customer, Unvan, Company, CompanyUnvan, SubcontractorCategory
+
+
+class CompanyForm(forms.ModelForm):
+    class Meta:
+        model = Company
+        fields = ('company_title', 'company_email',)
+        widgets = {
+            'company_title': TextInput(attrs={'id': 'company_title', 'name': 'company_title',
+                                              'class': 'form-control', }),
+
+            'company_email': TextInput(attrs={'id': 'company_email', 'name': 'company_email',
+                                              'class': 'form-control', }),
+        }
+
+
+class CompanyUnvanForm(forms.ModelForm):
+    class Meta:
+        model = CompanyUnvan
+        fields = ('company_unvan_title', 'company_unvan_city', 'company_unvan_state', 'company_unvan_zip')
+        widgets = {
+            'company_unvan_title': TextInput(attrs={'id': 'unvan_title', 'name': 'unvan_title',
+                                                    'class': 'form-control', }),
+
+            'company_unvan_city': TextInput(attrs={'id': 'unvan_city', 'name': 'unvan_city',
+                                                   'class': 'form-control', }),
+
+            'company_unvan_state': TextInput(attrs={'id': 'unvan_state', 'name': 'unvan_state',
+                                                    'class': 'form-control', }),
+
+            'company_unvan_zip': TextInput(attrs={'id': 'unvan_zip', 'name': 'unvan_zip',
+                                                  'class': 'form-control', }),
+        }
+
+
+class SubcontractorCategoryForm(forms.ModelForm):
+    class Meta:
+        model = SubcontractorCategory
+        fields = ('subcontractorcategory_electric', 'subcontractorcategory_plumber', 'subcontractorcategory_carpenter')
+        widgets = {
+            'subcontractorcategory_electric': CheckboxInput(attrs={'id': 'subcontractorcategory_electric',
+                                                                   'name': 'subcontractorcategory_electric',
+                                                                   'class': 'form-check-input', }),
+            'subcontractorcategory_plumber': CheckboxInput(attrs={'id': 'subcontractorcategory_plumber',
+                                                                   'name': 'subcontractorcategory_plumber',
+                                                                   'class': 'form-check-input', }),
+            'subcontractorcategory_carpenter': CheckboxInput(attrs={'id': 'subcontractorcategory_carpenter',
+                                                                   'name': 'subcontractorcategory_carpenter',
+                                                                   'class': 'form-check-input', }),
+
+        }
 
 
 class CustomerForm(forms.ModelForm):

@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 
+
 # Create your models here.
 
 # Extending User Model Using a One-To-One Link
@@ -9,9 +10,10 @@ from django.contrib.auth.models import User
 
 class Company(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE,
-                               blank=True, null=True, )  # Delete profile when user is deleted
+                             blank=True, null=True, )
     company_title = models.CharField(max_length=400)
-    company_category = models.CharField(max_length=400)
+    company_email = models.EmailField(blank=True, null=True)
+
 
     def __str__(self):
         return self.company_title + ' ' + self.company_category
@@ -19,6 +21,25 @@ class Company(models.Model):
     class Meta:
         verbose_name = 'company'
         verbose_name_plural = 'companies'
+
+
+class CompanyUnvan(models.Model):
+    company = models.ManyToManyField(Company,  blank=True, null=True)
+    company_unvan_title = models.CharField(max_length=400)
+    company_unvan_city = models.CharField(max_length=400)
+    company_unvan_state = models.CharField(max_length=400)
+    company_unvan_zip = models.CharField(max_length=400)
+    company_unvan_created_date = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return self.company_unvan_title
+
+
+class SubcontractorCategory(models.Model):
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, blank=True, null=True)
+    subcontractorcategory_electric = models.BooleanField(default=False)
+    subcontractorcategory_plumber = models.BooleanField(default=False)
+    subcontractorcategory_carpenter = models.BooleanField(default=False)
 
 
 class Customer(models.Model):

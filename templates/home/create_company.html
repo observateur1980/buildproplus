@@ -10,7 +10,7 @@
 
         <div class="container px-5 my-5">
             <div class="row">
-                <div class="col-md-6"><h2 class="fw-bolder">Create new Company</h2></div>
+                <div class="col-md-6"><h2 class="fw-bolder">Create a new Company</h2></div>
 
             </div>
             <div class="col-lg-6 col-xl-7">
@@ -18,94 +18,141 @@
                     <div class="card-body p-5">
 
                         <div class="mb-3">
-                            <span class="fw-bold" style="font-size: 19px">Customer information</span>
+                            <span class="fw-bold" style="font-size: 19px">Company information</span>
 
                         </div>
 
 
+                         <div class="mb-3">
+                                <label for="address" class="form-label">Company name</label>
+                                {{ company_form.company_title }}
 
+                            </div>
 
 
                             <div class="mb-3" style="padding-top: 12px">
                                 <label for="email" class="form-label">Email address</label>
-                                {{ customer_form.customer_email }}
+                                {{ company_form.company_email }}
                             </div>
 
 
                             <div class="mb-3">
                                 <label for="address" class="form-label">Address</label>
-                                {{ unvan_form.unvan_title }}
+                                {{ companyunvan_form.company_unvan_title }}
 
                             </div>
 
                             <div class="row">
                                 <div class="col">
                                     <label class="form-label" for="city">City</label>
-                                    {{unvan_form.unvan_city}}
+                                    {{companyunvan_form.company_unvan_city}}
                                 </div>
                                 <div class="col">
                                     <label class="form-label" for="state">State</label>
-                                    {{unvan_form.unvan_state}}
+                                    {{companyunvan_form.company_unvan_state}}
                                 </div>
                                 <div class="col">
                                     <label class="form-label" for="zip">ZIP</label>
-                                    {{ unvan_form.unvan_zip }}
+                                    {{ companyunvan_form.company_unvan_zip }}
                                 </div>
                             </div>
-
-
-
-                    </div>
-                </div>
-            </div>
-
-
-
-            <div class="col-lg-6 col-xl-7">
-                <div class="card mb-5 mb-xl-0">
-                    <div class="card-body p-5">
-
-                        <div class="mb-3">
-                            <span class="fw-bold" style="font-size: 19px">Project information</span>
+<br>
+                         <div class="mb-3">
+                            <span class="fw-bold" style="font-size: 19px">Categories</span>
 
                         </div>
 
-
-
-
-
-                            <div class="row">
-                                <div class="col">
-                                    <label for="exampleFormControlInput1" class="form-label"> Start date</label>
-                                    {{ project_form.project_start_date }}
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1" class="form-label">End date</label>
-                                    {{ project_form.project_end_date }}
-                                </div>
-                            </div>
-
-
-
-<br>
-                <div class="mb-3">
-                    <label for="" class="form-label">Project status</label>
-                        {{ project_form.status }}
-                </div>
-
-                            <div class="mb-5">
-  <label for="exampleFormControlTextarea1" class="form-label">Notes</label>
-  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-</div>
-
-<div class="container">
-    <input type="submit" value="Submit" class="form-control btn-primary" />
-</div>
-
-                    </div>
+                        <div class="row">
+                              <div class="col">
+                <div class="form-check">
+                    {{ subcontractorcategory_form.subcontractorcategory_electric }}
+                    <label class="form-check-label" for="subcontractorcategory_electric">Electric</label>
                 </div>
             </div>
+                              <div class="col">
+                <div class="form-check">
+                    {{ subcontractorcategory_form.subcontractorcategory_plumber }}
+                    <label class="form-check-label" for="subcontractorcategory_plumber">Plumber</label>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-check">
+                    {{ subcontractorcategory_form.subcontractorcategory_carpenter }}
+                    <label class="form-check-label" for="subcontractorcategory_carpenter">Carpenter</label>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+                            </div>
+                        <br>
+
+<div class="row">
+                              <div class="col">
+                <div class="form-check">
+                    {{ subcontractorcategory_form.subcontractorcategory_electric }}
+                    <label class="form-check-label" for="subcontractorcategory_electric">Electric</label>
+                </div>
+            </div>
+                              <div class="col">
+                <div class="form-check">
+                    {{ subcontractorcategory_form.subcontractorcategory_plumber }}
+                    <label class="form-check-label" for="subcontractorcategory_plumber">Plumber</label>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-check">
+                    {{ subcontractorcategory_form.subcontractorcategory_carpenter }}
+                    <label class="form-check-label" for="subcontractorcategory_carpenter">Carpenter</label>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+                            </div>
+
+<br>
+                        <br>
+<div class="mb-3">
+                            <div class="container">
+            <input type="submit" value="Submit" class="form-control btn-primary" />
         </div>
+                    </div>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+
+
+
+
+
+        </div>
+
+
+
+        <br>
+
+
+
+
 
     </form>
     </section>
